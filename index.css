@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: white;
+}
+body{
+    background-color: #000425;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 4cm;
+    font-weight: 700;
+}
+header ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+header nav a{
+    text-decoration: none;
+    margin: 0 40px;
+    transition: .6s ease-in;
+}
+header nav a.active,
+header nav a:hover{
+    color: rgb(0, 129, 19);
+    filter:brightness(200%);
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4cm;
+}
+.container img{
+    width: 8cm;
+    border-radius: 50%;
+    opacity: 70%;
+    filter: contrast(120%);
+}
+.container .description{
+    width: 18cm;
+}
+.description h2{
+    font-size: 50px;
+    margin-bottom: 5px;
+}
+.description h3{
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+.description p{
+    font-size: 18px;
+}
+.description .tags{
+    display: inline-block;
+}
+.description .tags span{
+    -webkit-text-stroke: 1px rgb(0, 129, 19);
+    filter:brightness(200%);
+    color: transparent;
+    animation: change-text infinite 16s;
+    animation-delay: calc((8s*var(--i)));
+    position: relative;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 1px 1px 5px green;
+}
+@keyframes change-text{
+    25%,75%{display: none;}
+}
+.tags span::before{
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    text-wrap: nowrap;
+    content: attr(text);
+    color: green;
+    overflow: hidden;
+    border-right: 2px solid green;
+    animation: fill-text 8s infinite linear;
+}
+@keyframes fill-text{
+    40%,60%{
+        width: 100%;
+    }
+}
