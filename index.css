@@ -88,3 +88,6 @@ header nav a:hover{
         width: 100%;
     }
 }
+.data i{
+    display: block;
+}
