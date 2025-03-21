@@ -91,3 +91,7 @@ header nav a:hover{
 .data i{
     display: block;
 }
+.top-view{
+    background-image: url("./image.png");
+    background-position: center;
+}
