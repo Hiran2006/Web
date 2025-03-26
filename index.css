@@ -134,6 +134,7 @@ footer nav img{
     width: 200px;
     height: 60px;
     text-align: center;
+    color: black;
     background-color: #ddd;
     display: flex;
     justify-content: center;
