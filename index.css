@@ -125,3 +125,24 @@ footer nav a{
 footer nav img{
     width: 100%;
 }
+.github-rep{
+    margin: 40px;}
+.git-container a{
+    display: block;
+    width: min-content;
+    text-decoration: none;
+    width: 200px;
+    height: 60px;
+    text-align: center;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin: 10px;
+}
+.git-container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
