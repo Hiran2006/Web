@@ -22,4 +22,5 @@ if (
   navigator.userAgent.match(/Windows Phone/i)
 ) {
   alert("This website version for desktop only.");
+  document.body.innerHTML = "";
 }
