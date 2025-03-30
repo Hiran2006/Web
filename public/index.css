@@ -6,7 +6,9 @@ header .img-container{
     border-radius: 50%;
     background-color: black;
     padding: .5rem;
-    box-shadow: #555 0 0 20px .1rem;
+    box-shadow: 
+    0 0 .2rem #fff,
+    0 0 1rem #00e5ff;
 }
 header .img-container img{
     width: 100%;
@@ -34,6 +36,9 @@ header h1{
     text-align: center;
     width: fit-content;
     margin-right: 3rem;
+    text-shadow: 
+    0 0 .01rem #fff,
+    0 0 .2em #00e5ff;
 }
 .container{
     margin: .8em;
@@ -48,14 +53,15 @@ header h1{
     background-color: #222;
     border-radius: 1em;
     text-shadow: #838383 .3rem .3rem 5px;
-    box-shadow: #040404 0 0 20px  .1em inset,#d3666685 .3rem .3rem 10px;
+    box-shadow: #040404 0 0 20px  .1em inset,#ff000057 0 0 40px .02em;
 }
 .quate h3{
     font-size: 1.5em;
 }
 .quate p{
-    margin: 0 .2em;
+    margin: 0 .8em;
     font-size: .7em;
+    letter-spacing: .1em;
     word-spacing: .4em;
     text-indent: 6rem;  
 }
