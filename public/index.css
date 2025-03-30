@@ -10,21 +10,9 @@ header .img-container{
     0 0 .2rem #fff,
     0 0 1rem #00e5ff;
 }
-header .img-container div{
+header .img-container img{
     width: 100%;
     aspect-ratio: 1/1;
-    animation: rotate-img 5s linear infinite;
-}
-@keyframes rotate-img {
-    0%{transform: rotateY(0deg);
-        content: url("/assets/logo.webp");}
-        25%{transform: rotateY(90deg);}
-            50%{transform: rotateY(0deg);
-                content: url("/assets/logo_red.webp");}
-                75%{transform: rotateY(90deg);}
-                
-    100%{transform: rotateY(0deg);
-        content: url("/assets/logo.webp");}
 }
 
 body{
@@ -66,7 +54,7 @@ header h1{
     background-color: #222;
     border-radius: 1em;
     text-shadow: #838383 .3rem .3rem 5px;
-    box-shadow: #040404 0 0 20px  .1em inset,#ff000057 0 0 40px .02em;
+    box-shadow: #040404 0 0 70px  .1em inset,#00e5ff .1em .1em 20px,#ff0000e0 0 0 40px .02em;
 }
 .quate h3{
     font-size: 1.5em;
