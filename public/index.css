@@ -121,3 +121,28 @@ header h1{
     background-color: rgb(200, 0, 255);
     color: white;
 }
+.copyright{
+    background-color: white;
+    font-size: .6em;
+    padding: .4em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.socialmedia-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5em;
+    position: relative;
+    text-align: center;
+}
+.socialmedia-links .link{
+    position: absolute;
+    width: 2em;
+    aspect-ratio: 1/1;
+}
+.socialmedia-links .link img{
+    width: 100%;
+}
