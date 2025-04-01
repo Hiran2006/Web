@@ -120,6 +120,7 @@ header h1{
     font-weight: bold;
     background-color: rgb(200, 0, 255);
     color: white;
+    margin: .3em;
 }
 .copyright{
     background-color: white;
