@@ -19,7 +19,7 @@ function Projects() {
   }, []);
   return (
     <div className="m-2">
-      <div className="flex justify-around flex-wrap">
+      <div className="grid grid-cols-3">
         {projects.map(project => (
           <GithubRep header={project.name} html_url={project.html_url} />
         ))}
