@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import Home from './Home.tsx';
+import Home from './home.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
