@@ -1,9 +1,10 @@
-import { Routes, Route, BrowserRouter, Link } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { useState } from 'react';
 import './index.css';
 import Home from './home.tsx';
 import Project from './project.tsx';
+import RoutesAvailable from './components/RouteAvailable.tsx';
 
 function App() {
   const [showRoutes, setShowRoutes] = useState(false);
@@ -51,33 +52,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
-const RoutesAvailable = ({ setShowRoutes }: { setShowRoutes: Function }) => {
-  const routes = [
-    { name: 'Home', path: '/' },
-    {
-      name: 'Project',
-      path: '/project',
-    },
-  ];
-
-  return (
-    <div className="fixed top-16 right-6 z-50 p-4 bg-white/95 shadow-2xl rounded-lg border border-blue-200 animate-fade-in">
-      <ul className="space-y-2">
-        {routes.map(route => (
-          <li key={route.path}>
-            <Link
-              to={route.path}
-              onClick={() => setShowRoutes(false)}
-              className="block px-4 py-2 rounded text-blue-700 hover:bg-blue-100 font-medium transition"
-            >
-              {route.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
+export default App;
 createRoot(document.getElementById('root')!).render(<App />);

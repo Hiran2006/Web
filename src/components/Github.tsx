@@ -7,7 +7,7 @@ const Github = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setRepos(data.map((repo: any) => repo.name));
+          setRepos(data.map(repo => repo.name));
         }
       });
   }, []);
