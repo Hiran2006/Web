@@ -11,6 +11,7 @@ const RoutesAvailable = ({
       name: 'Project',
       path: '/project',
     },
+    { name: 'Resume', path: '/resume' },
   ];
 
   return (

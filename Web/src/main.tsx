@@ -5,6 +5,7 @@ import './index.css';
 import Home from './home.tsx';
 import Project from './project.tsx';
 import RoutesAvailable from './components/RouteAvailable.tsx';
+import Resume from './Resume.tsx';
 
 function App() {
   const [showRoutes, setShowRoutes] = useState(false);
@@ -47,6 +48,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project" element={<Project />} />
+          <Route path="/resume" element={<Resume />} />
         </Routes>
       </div>
     </BrowserRouter>
