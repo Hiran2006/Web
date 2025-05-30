@@ -5,17 +5,19 @@ const Resume: React.FC = () => {
     <div className="container mx-auto max-w-[794px] bg-white p-4 rounded-lg">
       {/* Header */}
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Hiran</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Hiran S</h1>
         <div className="text-gray-600 text-sm">
-          <p>hiran@hiran.com</p>
-          <p>+91 1234567890</p>
-          <p>India</p>
+          <a href="mailto:hirans2006@gmail.com" className="text-red-500">
+            hirans2006@gmail.com
+          </a>
+          <p>+91 9778520386</p>
+          <p className="text-green-400">Kochin, Kerala, India</p>
           <p>
             <a
               href="https://linkedin.com/in/hirans2006"
-              className="text-blue-600 hover:underline"
+              className="text-blue-400"
             >
-              linkedin.com/in/hiran
+              Hiran S
             </a>
           </p>
         </div>
