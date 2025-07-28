@@ -1,11 +1,7 @@
-import Github from './components/Github.tsx';
+import Github from './components/Github.tsx'
 
 function Project() {
-  return (
-    <>
-      <Github />
-    </>
-  );
+  return <Github />
 }
 
-export default Project;
+export default Project
