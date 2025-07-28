@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 
 const Github = () => {
   const [repos, setRepos] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
+    setIsLoading(true)
     fetch('https://api.github.com/users/Hiran2006/repos')
       .then(res => res.json())
       .then(data => {
@@ -10,10 +13,27 @@ const Github = () => {
           setRepos(data.map(repo => repo.name))
         }
       })
+      .catch(error => {
+        console.error('Error fetching repositories:', error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [])
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[300px]">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+        <p className="mt-4 text-blue-700 font-medium">
+          Loading repositories...
+        </p>
+      </div>
+    )
+  }
+
   return (
     <>
-      <div className=" flex flex-col items-center justify-center text-center m-10">
+      <div className="flex flex-col items-center justify-center text-center m-10">
         <h1 className="text-blue-900 text-4xl font-extrabold">
           GitHub Repositories
         </h1>
