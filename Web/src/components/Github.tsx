@@ -1,8 +1,48 @@
 import { useState, useEffect } from 'react'
 
+const LANGUAGE_COLORS: Record<string, string> = {
+  JavaScript: '#f1e05a',
+  TypeScript: '#3178c6',
+  Python: '#3572A5',
+  Java: '#b07219',
+  C: '#555555',
+  'C++': '#f34b7d',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  Go: '#00ADD8',
+  Shell: '#89e051',
+  PHP: '#4F5D95',
+  Ruby: '#701516',
+  Rust: '#dea584',
+  Dart: '#00B4AB',
+  Swift: '#ffac45',
+  Kotlin: '#A97BFF',
+  // Add more as needed
+}
+
+import { useRef } from 'react'
+
 const Github = () => {
-  const [repos, setRepos] = useState<string[]>([])
+  const [repos, setRepos] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [tooltipRepo, setTooltipRepo] = useState<string | null>(null)
+  const tooltipTimeout = useRef<number | null>(null)
+
+  // Handlers for tap/long-press
+  const handleTouchStart = (repoName: string) => {
+    tooltipTimeout.current = setTimeout(() => setTooltipRepo(repoName), 500)
+  }
+  const handleTouchEnd = () => {
+    if (tooltipTimeout.current) {
+      clearTimeout(tooltipTimeout.current)
+      tooltipTimeout.current = null
+    }
+    setTimeout(() => setTooltipRepo(null), 1200)
+  }
+
+  // Handler for hover
+  const handleMouseEnter = (repoName: string) => setTooltipRepo(repoName)
+  const handleMouseLeave = () => setTooltipRepo(null)
 
   useEffect(() => {
     setIsLoading(true)
@@ -10,7 +50,12 @@ const Github = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setRepos(data.map(repo => repo.name))
+          setRepos(
+            data.map((repo: any) => ({
+              name: repo.name,
+              language: repo.language,
+            }))
+          )
         }
       })
       .catch(error => {
@@ -20,6 +65,7 @@ const Github = () => {
         setIsLoading(false)
       })
   }, [])
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[300px]">
@@ -39,15 +85,52 @@ const Github = () => {
         </h1>
         <p className="text-blue-700 text-lg font-medium">by Hiran S</p>
       </div>
-      <div className="bg-blue-400/90 rounded-3xl shadow-2xl px-10 py-10 min-w-[340px] max-w-[440px] w-full">
-        <ul className="grid gap-4">
-          {repos.map((name: string) => (
+      <div className="bg-blue-400/90 rounded-3xl shadow-2xl px-4 py-6 sm:px-8 sm:py-10 min-w-[90vw] max-w-[98vw] sm:min-w-[340px] sm:max-w-[460px] w-full overflow-x-auto">
+        <ul className="grid gap-3 sm:gap-4">
+          {repos.map(repo => (
             <li
-              key={name}
-              className="bg-white hover:bg-blue-50 text-blue-900 my-1 py-4 px-5 rounded-xl font-semibold shadow transition-all duration-200 border border-blue-100 flex items-center gap-3"
+              key={repo.name}
+              className="bg-white hover:bg-blue-50 text-blue-900 my-1 py-3 px-3 sm:py-4 sm:px-5 rounded-xl font-semibold shadow transition-all duration-200 border border-blue-100 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3"
             >
-              <span className="inline-block w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
-              {formatRepoName(name)}
+              <div className="flex items-center gap-2 min-w-0">
+                <span
+                  className="inline-block w-3 h-3 rounded-full flex-shrink-0"
+                  style={{
+                    backgroundColor: repo.language
+                      ? LANGUAGE_COLORS[repo.language] || '#586069'
+                      : '#586069',
+                  }}
+                  title={repo.language || 'Unknown'}
+                />
+                <div className="relative">
+                  <a
+                    href={`https://github.com/Hiran2006/${repo.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline truncate max-w-[60vw] sm:max-w-[220px]"
+                    title={formatRepoName(repo.name)}
+                    onMouseEnter={() => handleMouseEnter(repo.name)}
+                    onMouseLeave={handleMouseLeave}
+                    onTouchStart={() => handleTouchStart(repo.name)}
+                    onTouchEnd={handleTouchEnd}
+                  >
+                    {formatRepoName(repo.name)}
+                  </a>
+                  {tooltipRepo === repo.name && (
+                    <div className="absolute left-1/2 -translate-x-1/2 -top-9 z-50 bg-black text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap pointer-events-none">
+                      {repo.name}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {repo.language && (
+                <span
+                  className="text-xs sm:text-sm text-gray-600 font-normal ml-0 sm:ml-2 truncate max-w-[50vw] sm:max-w-[100px]"
+                  title={repo.language}
+                >
+                  {repo.language}
+                </span>
+              )}
             </li>
           ))}
         </ul>

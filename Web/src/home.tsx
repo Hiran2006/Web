@@ -3,7 +3,7 @@ function Home() {
     <div className="max-w-sm m-3 p-6 rounded-xl shadow-2xl bg-gradient-to-br from-blue-700 via-blue-500 to-blue-400">
       <div className="flex items-center mb-4">
         <img
-          src="https://ui-avatars.com/api/?name=Hiran+S"
+          src="https://lh3.googleusercontent.com/a/ACg8ocJTCMSpHumb6Oe6XxLNNDX8-B6NrKMcEX2qsKQDhdbdsV9cUG8=s360-c-no"
           alt="Profile"
           className="w-16 h-16 rounded-full mr-4 border-2 border-blue-400 shadow-lg"
         />
@@ -16,7 +16,7 @@ function Home() {
         "The best way to get started is to quit talking and begin doing."
       </blockquote>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
