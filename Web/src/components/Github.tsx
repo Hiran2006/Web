@@ -23,7 +23,9 @@ const LANGUAGE_COLORS: Record<string, string> = {
 import { useRef } from 'react'
 
 const Github = () => {
-  const [repos, setRepos] = useState<any[]>([])
+  const [repos, setRepos] = useState<Array<{ name: string; language: string }>>(
+    []
+  )
   const [isLoading, setIsLoading] = useState(true)
   const [tooltipRepo, setTooltipRepo] = useState<string | null>(null)
   const tooltipTimeout = useRef<number | null>(null)
@@ -48,10 +50,10 @@ const Github = () => {
     setIsLoading(true)
     fetch('https://api.github.com/users/Hiran2006/repos')
       .then(res => res.json())
-      .then(data => {
+      .then((data: Array<{ name: string; language: string }>) => {
         if (Array.isArray(data)) {
           setRepos(
-            data.map((repo: any) => ({
+            data.map(repo => ({
               name: repo.name,
               language: repo.language,
             }))
