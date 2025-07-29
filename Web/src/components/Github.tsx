@@ -5,19 +5,17 @@ const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: '#3178c6',
   Python: '#3572A5',
   Java: '#b07219',
-  C: '#555555',
+  'C#': '#00ff00',
   'C++': '#f34b7d',
   HTML: '#e34c26',
   CSS: '#563d7c',
   Go: '#00ADD8',
   Shell: '#89e051',
-  PHP: '#4F5D95',
   Ruby: '#701516',
   Rust: '#dea584',
   Dart: '#00B4AB',
   Swift: '#ffac45',
   Kotlin: '#A97BFF',
-  // Add more as needed
 }
 
 import { useRef } from 'react'
