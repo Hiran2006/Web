@@ -41,7 +41,7 @@ export default function WhoAmI() {
             <div className="relative max-w-2xl mx-auto lg:mx-0">
               <div className="absolute -inset-4 bg-gradient-to-r from-green-500/5 to-transparent rounded-xl -z-10 blur-lg"></div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-green-400 drop-shadow-lg">
-                Hi, I'm <span className="text-white">Hiran</span>
+                Hi, I&apos;m <span className="text-white">Hiran</span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-gray-300/90 leading-relaxed mb-6 sm:mb-8">
                 A passionate Full-Stack Developer with expertise in modern web

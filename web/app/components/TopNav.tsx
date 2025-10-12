@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import Link from "next/link";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -22,8 +23,8 @@ export default function TopNav() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Handle active path
@@ -32,7 +33,8 @@ export default function TopNav() {
       if (path === "/") return pathname === path;
       return pathname.startsWith(path);
     };
-    const activePath = navItems.find((item) => isActive(item.href))?.href || null;
+    const activePath =
+      navItems.find((item) => isActive(item.href))?.href || null;
     setIsActivePath(activePath);
   }, [pathname]);
 
@@ -44,16 +46,16 @@ export default function TopNav() {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
-  const NavLink = ({ item }: { item: typeof navItems[0] }) => (
+  const NavLink = ({ item }: { item: (typeof navItems)[0] }) => (
     <a
       href={item.href}
       className={`relative px-3 py-2 md:px-4 md:py-2 font-medium group overflow-hidden block
@@ -81,21 +83,21 @@ export default function TopNav() {
   );
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black/90 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+        isScrolled ? "bg-black/90 backdrop-blur-sm shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <a
+          <Link
             href="/"
             className="text-green-400 text-2xl font-bold hover:text-green-300 transition-colors"
             aria-label="Home"
           >
             Hiran
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:block" aria-label="Main navigation">
@@ -112,7 +114,7 @@ export default function TopNav() {
           <button
             className="md:hidden p-2 text-gray-400 hover:text-green-400 focus:outline-none transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? (
@@ -127,9 +129,9 @@ export default function TopNav() {
       {/* Mobile Menu */}
       <div
         className={`md:hidden fixed inset-0 bg-black/95 backdrop-blur-sm transition-all duration-300 ease-in-out transform ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{ top: '64px' }}
+        style={{ top: "64px" }}
       >
         <nav className="h-full overflow-y-auto">
           <ul className="flex flex-col items-center justify-center h-full space-y-8 p-4">

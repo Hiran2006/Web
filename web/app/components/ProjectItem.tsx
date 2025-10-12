@@ -1,5 +1,5 @@
-import Image, { StaticImageData } from 'next/image';
-import Link from 'next/link';
+import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface ProjectItemProps {
   title: string;
@@ -18,13 +18,15 @@ export default function ProjectItem({
   image,
   githubUrl,
   liveUrl,
-  className = '',
+  className = "",
 }: ProjectItemProps) {
   return (
-    <div className={`group relative overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm transition-all duration-300 hover:border-green-500/40 hover:bg-green-500/5 ${className}`}>
+    <div
+      className={`group relative overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm transition-all duration-300 hover:border-green-500/40 hover:bg-green-500/5 ${className}`}
+    >
       {/* Image with hover overlay */}
       <div className="relative aspect-video overflow-hidden">
-        {typeof image === 'string' ? (
+        {typeof image === "string" ? (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500/10 to-transparent">
             <span className="text-gray-500">Project Image</span>
           </div>
@@ -38,7 +40,7 @@ export default function ProjectItem({
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <div className="absolute bottom-4 left-4 right-4 flex gap-3">
             {githubUrl && (
-              <a
+              <Link
                 href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -47,7 +49,7 @@ export default function ProjectItem({
               >
                 <GitHubIcon className="h-4 w-4" />
                 <span>Code</span>
-              </a>
+              </Link>
             )}
             {liveUrl && (
               <a
@@ -71,7 +73,7 @@ export default function ProjectItem({
           {title}
         </h3>
         <p className="mb-4 text-gray-300 line-clamp-3">{description}</p>
-        
+
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
