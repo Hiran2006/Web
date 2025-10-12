@@ -1,14 +1,12 @@
-import ProjectItem from "./ProjectItem";
+import ProjectItem, { type ProjectItemProps } from "./ProjectItem";
 
-const projects = [
+const projects: ProjectItemProps[] = [
   {
-    title: "E-commerce Platform",
-    description:
-      "A full-stack e-commerce solution with payment integration and admin dashboard",
-    tags: ["React", "Node.js", "MongoDB", "Stripe"],
-    image: "/images/projects/ecommerce.jpg",
-    githubUrl: "#",
-    liveUrl: "#",
+    title: "Minecraft",
+    description: "Replicated actual Minecraft game using Unity",
+    tags: ["C#", "Unity", "ShaderLab"],
+    image: "/images/projects/minecraft.png",
+    githubUrl: "https://github.com/Hiran2006/Minecraft",
   },
   {
     title: "Task Management App",

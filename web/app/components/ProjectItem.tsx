@@ -1,7 +1,11 @@
+"use client";
+
+import { motion, Variants } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-interface ProjectItemProps {
+export interface ProjectItemProps {
   title: string;
   description: string;
   tags: string[];
@@ -9,6 +13,108 @@ interface ProjectItemProps {
   githubUrl?: string;
   liveUrl?: string;
   className?: string;
+  index?: number;
+}
+
+const cardVariants: Variants = {
+  offscreen: {
+    y: 50,
+    opacity: 0,
+  },
+  onscreen: (index = 0) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 20,
+      mass: 0.8,
+      delay: 0.2 * index,
+      duration: 0.8
+    },
+  }),
+} as const;
+
+const imageHoverVariants: Variants = {
+  hover: {
+    scale: 1.03,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+} as const;
+
+const overlayVariants: Variants = {
+  initial: { opacity: 0 },
+  hover: { 
+    opacity: 1,
+    transition: { 
+      duration: 0.5,
+      ease: [0.33, 1, 0.68, 1],
+      delay: 0.1
+    } 
+  },
+} as const;
+
+const buttonVariants: Variants = {
+  initial: { y: 10, opacity: 0 },
+  hover: { 
+    y: 0, 
+    opacity: 1,
+    transition: { 
+      type: "spring" as const,
+      stiffness: 200,
+      damping: 12,
+      mass: 0.5,
+      delay: 0.15
+    }
+  },
+} as const;
+
+const tagVariants: Variants = {
+  hidden: { opacity: 0, y: 5 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.15 * i,
+      type: "spring" as const,
+      stiffness: 150,
+      damping: 12,
+      mass: 0.5,
+    },
+  }),
+} as const;
+
+function Tag({ tag, index }: { tag: string; index: number }) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <span className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400">
+        {tag}
+      </span>
+    );
+  }
+
+  return (
+    <motion.span
+      custom={index}
+      variants={tagVariants}
+      className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400"
+      whileHover={{
+        scale: 1.05,
+        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+      }}
+    >
+      {tag}
+    </motion.span>
+  );
 }
 
 export default function ProjectItem({
@@ -19,74 +125,189 @@ export default function ProjectItem({
   githubUrl,
   liveUrl,
   className = "",
+  index = 0,
 }: ProjectItemProps) {
-  return (
-    <div
-      className={`group relative overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm transition-all duration-300 hover:border-green-500/40 hover:bg-green-500/5 ${className}`}
-    >
-      {/* Image with hover overlay */}
-      <div className="relative aspect-video overflow-hidden">
-        {typeof image === "string" ? (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500/10 to-transparent">
-            <span className="text-gray-500">Project Image</span>
-          </div>
-        ) : (
-          <Image
-            src={image}
-            alt={title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="absolute bottom-4 left-4 right-4 flex gap-3">
-            {githubUrl && (
-              <Link
-                href={githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-sm text-white backdrop-blur-sm hover:bg-green-500 hover:text-black"
-                aria-label="View on GitHub"
-              >
-                <GitHubIcon className="h-4 w-4" />
-                <span>Code</span>
-              </Link>
-            )}
-            {liveUrl && (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-sm text-white backdrop-blur-sm hover:bg-green-500 hover:text-black"
-                aria-label="View Live Demo"
-              >
-                <ExternalLinkIcon className="h-4 w-4" />
-                <span>Live</span>
-              </a>
-            )}
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <div className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm ${className}`}>
+        <div className="relative w-full aspect-video overflow-hidden bg-gray-800/50">
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="text-gray-500">Loading...</span>
           </div>
         </div>
+        <div className="flex-1 flex flex-col p-5">
+          <div>
+            <h3 className="text-xl font-bold text-green-400 line-clamp-1 mb-3">{title}</h3>
+            <p className="text-gray-300 line-clamp-3 mb-4 min-h-[4.5rem]">{description}</p>
+          </div>
+          <div className="mt-auto pt-4 border-t border-gray-800">
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag, i) => (
+                <span key={i} className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <motion.div
+      className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm ${className}`}
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={cardVariants}
+      custom={index}
+      whileHover="hover"
+    >
+      {/* Image with hover overlay */}
+      <div className="relative w-full aspect-video overflow-hidden">
+        {typeof image === "string" ? (
+          <motion.div 
+            className="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500/10 to-transparent"
+            variants={imageHoverVariants}
+          >
+            <span className="text-gray-500">Project Image</span>
+          </motion.div>
+        ) : (
+          <motion.div 
+            className="w-full h-full"
+            variants={imageHoverVariants}
+          >
+            <Image
+              src={image}
+              alt={title}
+              width={448}
+              height={252}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </motion.div>
+        )}
+        
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+          variants={overlayVariants}
+          initial="initial"
+        >
+          <motion.div 
+            className="absolute bottom-4 left-4 right-4 flex gap-3"
+            variants={{
+              initial: { opacity: 0, y: 20 },
+              hover: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.1,
+                },
+              },
+            }}
+          >
+            {githubUrl && (
+              <motion.div variants={buttonVariants}>
+                <Link
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 min-w-[6rem] items-center justify-center gap-1.5 rounded-full bg-black/50 px-4 py-2 text-sm text-white backdrop-blur-sm hover:bg-green-500 hover:text-black transition-colors"
+                  aria-label="View on GitHub"
+                >
+                  <GitHubIcon className="h-4 w-4 flex-shrink-0" />
+                  <span>Code</span>
+                </Link>
+              </motion.div>
+            )}
+            {liveUrl && (
+              <motion.div variants={buttonVariants}>
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 min-w-[6rem] items-center justify-center gap-1.5 rounded-full bg-black/50 px-4 py-2 text-sm text-white backdrop-blur-sm hover:bg-green-500 hover:text-black transition-colors"
+                  aria-label="View Live Demo"
+                >
+                  <ExternalLinkIcon className="h-4 w-4 flex-shrink-0" />
+                  <span>Live</span>
+                </a>
+              </motion.div>
+            )}
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Content */}
-      <div className="p-5">
-        <h3 className="mb-2 text-xl font-bold text-green-400 line-clamp-1">
-          {title}
-        </h3>
-        <p className="mb-4 text-gray-300 line-clamp-3">{description}</p>
+      <div className="flex-1 flex flex-col p-5">
+        <motion.div 
+          className="flex-1"
+          variants={{
+            initial: { opacity: 0, y: 10 },
+            onscreen: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                delay: 0.2,
+                duration: 0.3,
+              },
+            },
+          }}
+        >
+          <motion.h3 
+            className="text-xl font-bold text-green-400 line-clamp-1 mb-3"
+            variants={{
+              initial: { opacity: 0, y: 5 },
+              onscreen: { 
+                opacity: 1, 
+                y: 0,
+                transition: { delay: 0.2 } 
+              },
+            }}
+          >
+            {title}
+          </motion.h3>
+          <motion.p 
+            className="text-gray-300 line-clamp-3 mb-4 min-h-[4.5rem]"
+            variants={{
+              initial: { opacity: 0, y: 5 },
+              onscreen: { 
+                opacity: 1, 
+                y: 0,
+                transition: { delay: 0.25 } 
+              },
+            }}
+          >
+            {description}
+          </motion.p>
+        </motion.div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="whitespace-nowrap rounded-full bg-green-500/10 px-2.5 py-1 text-xs font-medium text-green-400"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        <motion.div 
+          className="mt-auto pt-4 border-t border-gray-800"
+          variants={{
+            onscreen: {
+              transition: {
+                staggerChildren: 0.05,
+              },
+            },
+          }}
+        >
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag, i) => (
+              <Tag key={tag} tag={tag} index={i} />
+            ))}
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
