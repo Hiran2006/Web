@@ -1,40 +1,6 @@
-import ProjectItem, { type ProjectItemProps } from "./ProjectItem";
-
-const projects: ProjectItemProps[] = [
-  {
-    title: "Minecraft",
-    description: "Replicated actual Minecraft game using Unity",
-    tags: ["C#", "Unity", "ShaderLab"],
-    image: "/images/projects/minecraft.png",
-    githubUrl: "https://github.com/Hiran2006/Minecraft",
-  },
-  {
-    title: "Task Management App",
-    description:
-      "Real-time task management application with drag-and-drop functionality",
-    tags: ["Next.js", "TypeScript", "Tailwind", "Firebase"],
-    image: "/images/projects/taskapp.jpg",
-    githubUrl: "#",
-    liveUrl: "#",
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "A personal portfolio website built with modern web technologies",
-    tags: ["React", "Next.js", "Tailwind CSS"],
-    image: "/images/projects/portfolio.jpg",
-    githubUrl: "#",
-    liveUrl: "#",
-  },
-  {
-    title: "Weather Dashboard",
-    description: "Real-time weather information with 5-day forecast",
-    tags: ["JavaScript", "OpenWeather API", "CSS3"],
-    image: "/images/projects/weather.jpg",
-    githubUrl: "#",
-    liveUrl: "#",
-  },
-];
+import Link from "next/link";
+import ProjectItem from "./ProjectItem";
+import { projects } from "@/data/projects";
 
 export default function ProjectCon() {
   return (
@@ -72,7 +38,10 @@ export default function ProjectCon() {
         </div>
 
         <div className="mt-8 text-center">
-          <button className="inline-flex items-center gap-2 px-6 py-2.5 border-2 border-green-500 text-green-400 font-medium rounded-lg hover:bg-green-500/10 transition-colors">
+          <Link 
+            href="/projects"
+            className="inline-flex items-center gap-2 px-6 py-2.5 border-2 border-green-500 text-green-400 font-medium rounded-lg hover:bg-green-500/10 transition-colors"
+          >
             View All Projects
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +58,7 @@ export default function ProjectCon() {
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>
-          </button>
+          </Link>
         </div>
       </div>
     </section>

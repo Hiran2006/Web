@@ -30,7 +30,7 @@ const cardVariants: Variants = {
       damping: 20,
       mass: 0.8,
       delay: 0.2 * index,
-      duration: 0.8
+      duration: 0.8,
     },
   }),
 } as const;
@@ -47,28 +47,28 @@ const imageHoverVariants: Variants = {
 
 const overlayVariants: Variants = {
   initial: { opacity: 0 },
-  hover: { 
+  hover: {
     opacity: 1,
-    transition: { 
+    transition: {
       duration: 0.5,
       ease: [0.33, 1, 0.68, 1],
-      delay: 0.1
-    } 
+      delay: 0.1,
+    },
   },
 } as const;
 
 const buttonVariants: Variants = {
   initial: { y: 10, opacity: 0 },
-  hover: { 
-    y: 0, 
+  hover: {
+    y: 0,
     opacity: 1,
-    transition: { 
+    transition: {
       type: "spring" as const,
       stiffness: 200,
       damping: 12,
       mass: 0.5,
-      delay: 0.15
-    }
+      delay: 0.15,
+    },
   },
 } as const;
 
@@ -109,7 +109,7 @@ function Tag({ tag, index }: { tag: string; index: number }) {
       className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400"
       whileHover={{
         scale: 1.05,
-        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+        backgroundColor: "rgba(16, 185, 129, 0.2)",
       }}
     >
       {tag}
@@ -127,127 +127,51 @@ export default function ProjectItem({
   className = "",
   index = 0,
 }: ProjectItemProps) {
-  const [isMounted, setIsMounted] = useState(false);
+  const [imageErr, setImageErr] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return (
-      <div className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm ${className}`}>
-        <div className="relative w-full aspect-video overflow-hidden bg-gray-800/50">
-          <div className="flex h-full w-full items-center justify-center">
-            <span className="text-gray-500">Loading...</span>
-          </div>
-        </div>
-        <div className="flex-1 flex flex-col p-5">
-          <div>
-            <h3 className="text-xl font-bold text-green-400 line-clamp-1 mb-3">{title}</h3>
-            <p className="text-gray-300 line-clamp-3 mb-4 min-h-[4.5rem]">{description}</p>
-          </div>
-          <div className="mt-auto pt-4 border-t border-gray-800">
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag, i) => (
-                <span key={i} className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Remove isMounted check and always render the same structure
   return (
     <motion.div
-      className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm ${className}`}
+      className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm transition-all duration-300 ${className}`}
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true, amount: 0.2 }}
       variants={cardVariants}
       custom={index}
-      whileHover="hover"
+      whileHover={{
+        boxShadow: "0 0 15px rgba(16, 185, 129, 0.5)",
+        borderColor: "rgba(16, 185, 129, 0.5)",
+      }}
     >
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-green-500/5 via-transparent to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
       {/* Image with hover overlay */}
       <div className="relative w-full aspect-video overflow-hidden">
-        {typeof image === "string" ? (
-          <motion.div 
-            className="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500/10 to-transparent"
-            variants={imageHoverVariants}
-          >
-            <span className="text-gray-500">Project Image</span>
-          </motion.div>
-        ) : (
-          <motion.div 
-            className="w-full h-full"
-            variants={imageHoverVariants}
-          >
+        <motion.div className="w-full h-full" variants={imageHoverVariants}>
+          {imageErr ? (
+            <div className="w-full h-full object-cover bg-green-950"></div>
+          ) : (
             <Image
               src={image}
               alt={title}
               width={448}
               height={252}
               className="w-full h-full object-cover"
-              priority
+              loading="lazy"
+              onError={() => setImageErr(true)}
             />
-          </motion.div>
-        )}
-        
-        <motion.div 
+          )}
+        </motion.div>
+
+        <motion.div
           className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
           variants={overlayVariants}
           initial="initial"
-        >
-          <motion.div 
-            className="absolute bottom-4 left-4 right-4 flex gap-3"
-            variants={{
-              initial: { opacity: 0, y: 20 },
-              hover: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  staggerChildren: 0.1,
-                  delayChildren: 0.1,
-                },
-              },
-            }}
-          >
-            {githubUrl && (
-              <motion.div variants={buttonVariants}>
-                <Link
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 min-w-[6rem] items-center justify-center gap-1.5 rounded-full bg-black/50 px-4 py-2 text-sm text-white backdrop-blur-sm hover:bg-green-500 hover:text-black transition-colors"
-                  aria-label="View on GitHub"
-                >
-                  <GitHubIcon className="h-4 w-4 flex-shrink-0" />
-                  <span>Code</span>
-                </Link>
-              </motion.div>
-            )}
-            {liveUrl && (
-              <motion.div variants={buttonVariants}>
-                <a
-                  href={liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 min-w-[6rem] items-center justify-center gap-1.5 rounded-full bg-black/50 px-4 py-2 text-sm text-white backdrop-blur-sm hover:bg-green-500 hover:text-black transition-colors"
-                  aria-label="View Live Demo"
-                >
-                  <ExternalLinkIcon className="h-4 w-4 flex-shrink-0" />
-                  <span>Live</span>
-                </a>
-              </motion.div>
-            )}
-          </motion.div>
-        </motion.div>
+        />
       </div>
 
       {/* Content */}
       <div className="flex-1 flex flex-col p-5">
-        <motion.div 
+        <motion.div
           className="flex-1"
           variants={{
             initial: { opacity: 0, y: 10 },
@@ -261,27 +185,27 @@ export default function ProjectItem({
             },
           }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-xl font-bold text-green-400 line-clamp-1 mb-3"
             variants={{
               initial: { opacity: 0, y: 5 },
-              onscreen: { 
-                opacity: 1, 
+              onscreen: {
+                opacity: 1,
                 y: 0,
-                transition: { delay: 0.2 } 
+                transition: { delay: 0.2 },
               },
             }}
           >
             {title}
           </motion.h3>
-          <motion.p 
+          <motion.p
             className="text-gray-300 line-clamp-3 mb-4 min-h-[4.5rem]"
             variants={{
               initial: { opacity: 0, y: 5 },
-              onscreen: { 
-                opacity: 1, 
+              onscreen: {
+                opacity: 1,
                 y: 0,
-                transition: { delay: 0.25 } 
+                transition: { delay: 0.25 },
               },
             }}
           >
@@ -289,8 +213,46 @@ export default function ProjectItem({
           </motion.p>
         </motion.div>
 
+        {/* Action Buttons */}
+        <motion.div
+          className="flex gap-3 mb-4"
+          variants={{
+            initial: { opacity: 0, y: 10 },
+            onscreen: {
+              opacity: 1,
+              y: 0,
+              transition: { delay: 0.3 },
+            },
+          }}
+        >
+          {githubUrl && (
+            <Link
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-green-500/10 px-4 py-2.5 text-sm font-medium text-green-400 hover:bg-green-500/20 transition-colors"
+              aria-label="View on GitHub"
+            >
+              <GitHubIcon className="h-4 w-4 flex-shrink-0" />
+              <span>View Code</span>
+            </Link>
+          )}
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-green-500/90 px-4 py-2.5 text-sm font-medium text-white hover:bg-green-500 transition-colors"
+              aria-label="View Live Demo"
+            >
+              <ExternalLinkIcon className="h-4 w-4 flex-shrink-0" />
+              <span>Live Demo</span>
+            </a>
+          )}
+        </motion.div>
+
         {/* Tags */}
-        <motion.div 
+        <motion.div
           className="mt-auto pt-4 border-t border-gray-800"
           variants={{
             onscreen: {
