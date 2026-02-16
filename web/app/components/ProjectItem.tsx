@@ -57,21 +57,6 @@ const overlayVariants: Variants = {
   },
 } as const;
 
-const buttonVariants: Variants = {
-  initial: { y: 10, opacity: 0 },
-  hover: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring" as const,
-      stiffness: 200,
-      damping: 12,
-      mass: 0.5,
-      delay: 0.15,
-    },
-  },
-} as const;
-
 const tagVariants: Variants = {
   hidden: { opacity: 0, y: 5 },
   show: (i: number) => ({

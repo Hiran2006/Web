@@ -9,8 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Projects", href: "/projects" },
+  { label: "Contact", href: "/contact" },
 ];
 
 // Move variants inside component to avoid SSR issues
@@ -40,10 +40,10 @@ const getVariants = () => ({
       x: 0,
       transition: { type: "spring" as const, stiffness: 300, damping: 30 },
     },
-    closed: { 
+    closed: {
       opacity: 0,
       x: "100%",
-      transition: { duration: 0.3 } 
+      transition: { duration: 0.3 },
     },
   },
 });
@@ -108,9 +108,9 @@ export default function TopNav() {
       <motion.span
         className={`absolute inset-0 bg-green-500/10 rounded-lg`}
         initial={{ scale: 0 }}
-        animate={{ 
+        animate={{
           scale: isActivePath === item.href || isMenuOpen ? 1 : 0,
-          opacity: isMenuOpen ? 0.5 : 1
+          opacity: isMenuOpen ? 0.5 : 1,
         }}
         whileHover={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -118,13 +118,13 @@ export default function TopNav() {
       <motion.span
         className="absolute bottom-0 left-0 w-full h-0.5 bg-green-400 origin-left"
         initial={{ scaleX: 0 }}
-        animate={{ 
+        animate={{
           scaleX: isActivePath === item.href ? 1 : 0,
-          opacity: isMenuOpen ? 0 : 1
+          opacity: isMenuOpen ? 0 : 1,
         }}
-        whileHover={{ 
+        whileHover={{
           scaleX: isMenuOpen ? 0 : 1,
-          opacity: 1
+          opacity: 1,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
@@ -133,7 +133,7 @@ export default function TopNav() {
 
   // Get variants inside component to avoid SSR issues
   const variants = getVariants();
-  
+
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 ${
@@ -146,10 +146,7 @@ export default function TopNav() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/"
               className="text-green-400 text-2xl font-bold hover:text-green-300 transition-colors"
@@ -160,7 +157,7 @@ export default function TopNav() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <motion.nav 
+          <motion.nav
             className="hidden md:flex space-x-2"
             initial="hidden"
             animate="visible"
@@ -215,15 +212,15 @@ export default function TopNav() {
             exit="closed"
             variants={variants.menu}
           >
-            <motion.div 
+            <motion.div
               className="container mx-auto px-4 py-8 flex flex-col space-y-4"
               variants={variants.container}
               initial="hidden"
               animate="visible"
             >
               {navItems.map((item, index) => (
-                <motion.div 
-                  key={item.href} 
+                <motion.div
+                  key={item.href}
                   variants={variants.item}
                   custom={index}
                   className="border-b border-gray-800 last:border-0"

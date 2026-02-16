@@ -75,7 +75,7 @@ export default function WhoAmI() {
               <div className="w-full h-full rounded-full overflow-hidden">
                 <div className="w-full h-full bg-gradient-to-br from-green-500/10 to-black/30 flex items-center justify-center">
                   <Image
-                    src="/your-photo.jpg"
+                    src="/hiran_pic.png"
                     alt="Hiran"
                     width={500}
                     height={500}
