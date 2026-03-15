@@ -3,7 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export interface ProjectItemProps {
   title: string;
@@ -73,25 +73,12 @@ const tagVariants: Variants = {
 } as const;
 
 function Tag({ tag, index }: { tag: string; index: number }) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return (
-      <span className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400">
-        {tag}
-      </span>
-    );
-  }
 
   return (
     <motion.span
       custom={index}
       variants={tagVariants}
-      className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-400"
+      className="inline-block whitespace-nowrap rounded-full bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-700 dark:text-green-400 transition-colors"
       whileHover={{
         scale: 1.05,
         backgroundColor: "rgba(16, 185, 129, 0.2)",
@@ -117,7 +104,7 @@ export default function ProjectItem({
   // Remove isMounted check and always render the same structure
   return (
     <motion.div
-      className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-black/50 backdrop-blur-sm transition-all duration-300 ${className}`}
+      className={`group relative w-full max-w-md h-full flex flex-col overflow-hidden rounded-xl border border-green-500/20 bg-white/50 dark:bg-black/50 backdrop-blur-sm transition-all duration-300 shadow-lg dark:shadow-none ${className}`}
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true, amount: 0.2 }}
@@ -171,7 +158,7 @@ export default function ProjectItem({
           }}
         >
           <motion.h3
-            className="text-xl font-bold text-green-400 line-clamp-1 mb-3"
+            className="text-xl font-bold text-green-600 dark:text-green-400 line-clamp-1 mb-3 transition-colors"
             variants={{
               initial: { opacity: 0, y: 5 },
               onscreen: {
@@ -184,7 +171,7 @@ export default function ProjectItem({
             {title}
           </motion.h3>
           <motion.p
-            className="text-gray-300 line-clamp-3 mb-4 min-h-[4.5rem]"
+            className="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4 min-h-[4.5rem] transition-colors"
             variants={{
               initial: { opacity: 0, y: 5 },
               onscreen: {
@@ -215,7 +202,7 @@ export default function ProjectItem({
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-green-500/10 px-4 py-2.5 text-sm font-medium text-green-400 hover:bg-green-500/20 transition-colors"
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-green-500/10 px-4 py-2.5 text-sm font-medium text-green-700 dark:text-green-400 hover:bg-green-500/20 transition-colors"
               aria-label="View on GitHub"
             >
               <GitHubIcon className="h-4 w-4 flex-shrink-0" />
@@ -238,7 +225,7 @@ export default function ProjectItem({
 
         {/* Tags */}
         <motion.div
-          className="mt-auto pt-4 border-t border-gray-800"
+          className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 transition-colors"
           variants={{
             onscreen: {
               transition: {

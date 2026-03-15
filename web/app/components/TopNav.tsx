@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -52,27 +53,12 @@ export default function TopNav() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isActivePath, setIsActivePath] = useState<string | null>(null);
-
-  // Handle scroll effect for navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Handle active path
-  useEffect(() => {
-    const isActive = (path: string) => {
-      if (path === "/") return pathname === path;
-      return pathname.startsWith(path);
-    };
-    const activePath =
-      navItems.find((item) => isActive(item.href))?.href || null;
-    setIsActivePath(activePath);
-  }, [pathname]);
+  // Active path can be derived directly from pathname instead of using effect
+  const isActivePath =
+    navItems.find((item) => {
+      if (item.href === "/") return pathname === item.href;
+      return pathname.startsWith(item.href);
+    })?.href || null;
 
   // Close mobile menu when path changes
   useEffect(() => {
@@ -95,10 +81,9 @@ export default function TopNav() {
     <motion.a
       href={item.href}
       className={`relative px-3 py-2 md:px-4 md:py-2 font-medium group overflow-hidden block
-        ${
-          isActivePath === item.href
-            ? "text-green-400"
-            : "text-gray-400 hover:text-green-300"
+        ${isActivePath === item.href
+          ? "text-green-600 dark:text-green-400"
+          : "text-gray-600 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-300"
         } transition-colors`}
       aria-current={isActivePath === item.href ? "page" : undefined}
       whileHover={{ scale: 1.05 }}
@@ -136,9 +121,8 @@ export default function TopNav() {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 ${
-        isScrolled ? "bg-black/90 backdrop-blur-sm shadow-lg" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 ${isScrolled ? "bg-white/90 dark:bg-black/90 backdrop-blur-sm shadow-lg dark:shadow-green-900/10" : "bg-transparent"
+        }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring" as const, stiffness: 300, damping: 25 }}
@@ -149,56 +133,62 @@ export default function TopNav() {
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/"
-              className="text-green-400 text-2xl font-bold hover:text-green-300 transition-colors"
+              className="text-green-600 dark:text-green-400 text-2xl font-bold hover:text-green-500 dark:hover:text-green-300 transition-colors"
               aria-label="Home"
             >
               Hiran
             </Link>
           </motion.div>
 
-          {/* Desktop Navigation */}
-          <motion.nav
-            className="hidden md:flex space-x-2"
-            initial="hidden"
-            animate="visible"
-            variants={variants.container}
-          >
-            {navItems.map((item) => (
-              <motion.div key={item.href} variants={variants.item}>
-                <NavLink item={item} />
-              </motion.div>
-            ))}
-          </motion.nav>
+          {/* Desktop Navigation & Theme Switcher */}
+          <div className="hidden md:flex items-center space-x-6">
+            <motion.nav
+              className="flex space-x-2"
+              initial="hidden"
+              animate="visible"
+              variants={variants.container}
+            >
+              {navItems.map((item) => (
+                <motion.div key={item.href} variants={variants.item}>
+                  <NavLink item={item} />
+                </motion.div>
+              ))}
+            </motion.nav>
+            <ThemeSwitcher />
+          </div>
 
           {/* Mobile menu button */}
-          <motion.button
-            className="md:hidden p-2 text-gray-400 hover:text-green-400 focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            whileTap={{ scale: 0.9 }}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            <AnimatePresence mode="wait">
-              {isMenuOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                >
-                  <FiX className="h-6 w-6" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                >
-                  <FiMenu className="h-6 w-6" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+          <div className="md:hidden flex items-center space-x-4">
+            <ThemeSwitcher />
+            <motion.button
+              className="p-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 focus:outline-none"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              whileTap={{ scale: 0.9 }}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              <AnimatePresence mode="wait">
+                {isMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                  >
+                    <FiX className="h-6 w-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                  >
+                    <FiMenu className="h-6 w-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
         </div>
       </div>
 
@@ -206,7 +196,7 @@ export default function TopNav() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-black/90 backdrop-blur-lg md:hidden pt-16 z-40 overflow-y-auto"
+            className="fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-lg md:hidden pt-16 z-40 overflow-y-auto"
             initial="closed"
             animate="open"
             exit="closed"
@@ -223,7 +213,7 @@ export default function TopNav() {
                   key={item.href}
                   variants={variants.item}
                   custom={index}
-                  className="border-b border-gray-800 last:border-0"
+                  className="border-b border-gray-200 dark:border-gray-800 last:border-0"
                 >
                   <NavLink item={item} />
                 </motion.div>

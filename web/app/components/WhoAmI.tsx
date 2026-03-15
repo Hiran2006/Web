@@ -2,6 +2,7 @@
 
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
+import skillsData from "@/data/skills.json";
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -41,12 +42,12 @@ const techItem: Variants = {
 };
 
 export default function WhoAmI() {
-  const techStack = ["NextJS", "React", "Express", "Unity C#"];
+  const techStack = skillsData.techStack;
 
   return (
     <motion.section
       id="about"
-      className="min-h-[calc(100vh-4rem)] bg-black text-white pt-4 pb-8 md:py-16 flex items-center"
+      className="min-h-[calc(100vh-4rem)] bg-white dark:bg-black text-black dark:text-white pt-4 pb-8 md:py-16 flex items-center transition-colors duration-300"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
@@ -142,11 +143,11 @@ export default function WhoAmI() {
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-green-400 drop-shadow-lg"
                 variants={item}
               >
-                Hi, I&apos;m <span className="text-white">Hiran</span>
+                Hi, I&apos;m <span className="text-black dark:text-white">Hiran</span>
               </motion.h1>
 
               <motion.p
-                className="text-base sm:text-lg md:text-xl text-gray-300/90 leading-relaxed mb-6 sm:mb-8"
+                className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300/90 leading-relaxed mb-6 sm:mb-8 transition-colors"
                 variants={item}
               >
                 a developer focused on the fun side of coding: game development
@@ -185,7 +186,7 @@ export default function WhoAmI() {
               {/* Tech Stack Icons */}
               <motion.div className="mt-10 sm:mt-12" variants={item}>
                 <motion.p
-                  className="text-sm font-medium text-gray-400 mb-3"
+                  className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 transition-colors"
                   variants={item}
                 >
                   TECH STACK
@@ -199,7 +200,7 @@ export default function WhoAmI() {
                       key={tech}
                       custom={index}
                       variants={techItem}
-                      className="inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-gray-900/50 text-gray-200 border border-gray-800"
+                      className="inline-flex items-center px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-gray-100 dark:bg-gray-900/50 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-800 transition-colors"
                       whileHover={{
                         scale: 1.05,
                         backgroundColor: "rgba(16, 185, 129, 0.1)",
