@@ -37,4 +37,11 @@ export const projects: ProjectItemProps[] = [
     image: "/projects/weather.jpg",
     githubUrl: "https://github.com/Hiran2006/Weather-App",
   },
+  {
+    title: "Authentication",
+    description: "Made a Web that uses both JWT and Session authentication techniques",
+    tags: ["html", "Javascript", "Express", "Postgres"],
+    image: "https://www.cisco.com/content/dam/cisco-cdc/site/images/legacy/assets/swa/img/anchor-info/what-is-user-authentication-628x353.png",
+    githubUrl: "https://github.com/Hiran2006/authentication",
+  }
 ];
