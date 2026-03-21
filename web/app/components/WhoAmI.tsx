@@ -2,7 +2,7 @@
 
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
-import skillsData from "@/data/skills.json";
+import skillsData from "@/data/skill";
 
 const container: Variants = {
   hidden: { opacity: 0 },

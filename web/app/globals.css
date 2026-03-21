@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../node_modules/@msh-01/react-github-activity/**/*.js";
+@source "../node_modules/@msh-01/react-github-activity/**/*.mjs";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -23,8 +25,10 @@
 
 /* Hide scrollbar for all elements */
 * {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Hide scrollbar for WebKit browsers (Chrome, Safari) */

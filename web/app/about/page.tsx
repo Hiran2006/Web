@@ -2,7 +2,9 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
-import skillsData from "@/data/skills.json";
+import skillsData from "@/data/skill";
+import GithubActivity from "../components/GithubActivity";
+import JourneyTimeline from "../components/JourneyTimeline";
 
 export const metadata: Metadata = {
   title: "About | Hiran",
@@ -109,51 +111,13 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-16 md:mt-24">
-          <h2 className="text-2xl font-bold text-center text-green-600 dark:text-green-400 mb-10 transition-colors">
+          <h2 className="text-3xl font-bold text-center text-green-600 dark:text-green-400 mb-16 transition-colors drop-shadow-sm">
             My Journey
           </h2>
-          <div className="relative pl-6 md:pl-0">
-            <div className="absolute left-0 md:left-1/2 w-1 h-full bg-gray-300 dark:bg-gray-700 transform md:-translate-x-1/2 transition-colors"></div>
-
-            <div className="mb-10 md:mb-8 relative">
-              <div className="absolute -left-[1.8rem] top-1.5 w-4 h-4 bg-green-500 rounded-full z-10 md:hidden"></div>
-              <div className="flex flex-col md:flex-row items-start md:items-center">
-                <div className="md:w-1/2 md:pr-12 mb-2 md:mb-0 text-left md:text-right">
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white transition-colors">
-                    Started Learning Web Development
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 transition-colors">2020</p>
-                </div>
-                <div className="w-4 h-4 bg-green-500 rounded-full z-10 mb-2 md:mb-0 hidden md:block"></div>
-                <div className="md:w-1/2 md:pl-12 mt-2 md:mt-0">
-                  <p className="text-gray-700 dark:text-gray-300 transition-colors">
-                    Began my journey into web development with HTML, CSS, and
-                    JavaScript.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-10 md:mb-8 relative">
-              <div className="absolute -left-[1.8rem] top-1.5 w-4 h-4 bg-green-500 rounded-full z-10 md:hidden"></div>
-              <div className="flex flex-col md:flex-row items-start md:items-center">
-                <div className="md:w-1/2 md:pr-12 mb-2 md:mb-0 text-left md:text-right order-2 md:order-1">
-                  <p className="text-gray-700 dark:text-gray-300 transition-colors">
-                    Worked on various projects to hone my skills in modern web
-                    technologies.
-                  </p>
-                </div>
-                <div className="w-4 h-4 bg-green-500 rounded-full z-10 order-1 md:order-2 mb-2 md:mb-0 hidden md:block"></div>
-                <div className="md:w-1/2 md:pl-12 mt-2 md:mt-0 order-1 md:order-3">
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white transition-colors">
-                    Building Projects
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 transition-colors">2021 - Present</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <JourneyTimeline />
         </div>
+
+        <GithubActivity />
       </div>
     </main>
   );
