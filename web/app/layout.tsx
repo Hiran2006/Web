@@ -1,11 +1,25 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
+import TopNav from "./components/TopNav";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hiran",
-  description: "Hiran - Full-stack Web Developer and Game Developer Portfolio",
+  title: "Hiran | Web Developer",
+  description: "Hiran - Full-stack Web Developer and Game Developer Portfolio showcasing projects and skills.",
+  openGraph: {
+    title: "Hiran | Developer Portfolio",
+    description: "Full-stack Web Developer and Game Developer Portfolio showcasing projects and skills.",
+    url: "https://hiran-portfolio.vercel.app", 
+    siteName: "Hiran Portfolio",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hiran | Developer Portfolio",
+    description: "Full-stack Web Developer and Game Developer Portfolio showcasing projects and skills.",
+  },
 };
 
 const geistSans = Geist({
@@ -34,6 +48,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <TopNav />
           {children}
         </ThemeProvider>
       </body>

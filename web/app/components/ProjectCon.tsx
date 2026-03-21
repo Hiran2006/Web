@@ -12,11 +12,15 @@ export default function ProjectCon() {
     if (containerRef.current) {
       const container = containerRef.current;
       const project = container.children[0]?.children[index] as HTMLElement;
+      
       if (project) {
-        project.scrollIntoView({
+        const containerWidth = container.offsetWidth;
+        const projectLeft = project.offsetLeft;
+        const projectWidth = project.offsetWidth;
+
+        container.scrollTo({
+          left: projectLeft - containerWidth / 2 + projectWidth / 2,
           behavior: "smooth",
-          block: "nearest",
-          inline: "center",
         });
       }
     }

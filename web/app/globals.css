@@ -57,3 +57,34 @@ body {
   width: 0 !important;
   height: 0 !important;
 }
+
+/* Force text colors for HTML and SVG elements inside the GitHub graph in both themes */
+.github-activity-wrapper div,
+.github-activity-wrapper span,
+.github-activity-wrapper p,
+.github-activity-wrapper strong,
+.github-activity-wrapper h4,
+.github-activity-wrapper h5,
+.github-activity-wrapper h6 {
+  color: #171717 !important;
+}
+
+.github-activity-wrapper text {
+  fill: #171717 !important;
+  color: #171717 !important;
+}
+
+.dark .github-activity-wrapper div,
+.dark .github-activity-wrapper span,
+.dark .github-activity-wrapper p,
+.dark .github-activity-wrapper strong,
+.dark .github-activity-wrapper h4,
+.dark .github-activity-wrapper h5,
+.dark .github-activity-wrapper h6 {
+  color: #ededed !important;
+}
+
+.dark .github-activity-wrapper text {
+  fill: #ededed !important;
+  color: #ededed !important;
+}

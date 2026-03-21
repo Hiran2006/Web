@@ -1,10 +1,9 @@
 "use client";
 
 import { GitHubContributions } from "@msh-01/react-github-activity";
-
 export default function GithubActivity() {
   return (
-    <div className="w-full max-w-4xl mx-auto my-12 p-6 bg-white dark:bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+    <div className="github-activity-wrapper w-full max-w-4xl mx-auto my-12 p-6 bg-white dark:bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
       <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6 transition-colors">
         GitHub Activity & Statistics
       </h3>

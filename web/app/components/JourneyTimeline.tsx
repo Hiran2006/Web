@@ -27,7 +27,7 @@ const JourneyCard = ({ item, isEven }: { item: JourneyItem; isEven: boolean }) =
 
 export default function JourneyTimeline() {
   return (
-    <div className="relative pl-6 md:pl-0 max-w-5xl mx-auto py-8">
+    <div className="relative pl-8 md:pl-0 max-w-5xl mx-auto py-8">
       {/* Central Line */}
       <div className="absolute left-0 md:left-1/2 top-4 bottom-4 w-1 bg-gradient-to-b from-green-500/0 via-green-500/50 to-green-500/0 transform md:-translate-x-1/2 rounded-full"></div>
 
@@ -46,7 +46,7 @@ export default function JourneyTimeline() {
             }`}
           >
             {/* Mobile Dot */}
-            <div className="absolute -left-[1.85rem] top-8 w-4 h-4 bg-green-500 rounded-full z-10 md:hidden ring-4 ring-white dark:ring-black shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+            <div className="absolute -left-[2.05rem] sm:-left-[2.1rem] top-8 w-4 h-4 bg-green-500 rounded-full z-10 md:hidden ring-4 ring-white dark:ring-black shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
 
             {/* Desktop Center Dot */}
             <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-green-500 rounded-full z-10 ring-4 ring-white dark:ring-black shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>

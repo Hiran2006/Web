@@ -15,7 +15,7 @@ const skills = skillsData.skills;
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-green-600 dark:text-green-400 mb-4 transition-colors">
@@ -25,7 +25,7 @@ export default function AboutPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
-          <div className="relative w-56 h-56 sm:w-64 sm:h-64 mx-auto md:mx-0">
+          <div className="relative w-56 h-56 sm:w-64 sm:h-64 mx-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-transparent rounded-full transform rotate-12"></div>
             <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-green-500/30">
               <Image
@@ -40,16 +40,16 @@ export default function AboutPage() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-800 dark:text-white transition-colors transition-colors">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white transition-colors">
               Hi, I&apos;m Hiran
             </h2>
-            <p className="text-gray-700 dark:text-gray-700 dark:text-gray-300 transition-colors leading-relaxed transition-colors">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
               I&apos;m a passionate web developer with a love for creating
               beautiful, responsive, and user-friendly websites. With a strong
               foundation in modern web technologies, I enjoy turning ideas into
               reality through clean and efficient code.
             </p>
-            <p className="text-gray-700 dark:text-gray-700 dark:text-gray-300 transition-colors leading-relaxed transition-colors">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
               When I&apos;m not coding, you can find me exploring new
               technologies, contributing to open-source projects, or enjoying
               the great outdoors.

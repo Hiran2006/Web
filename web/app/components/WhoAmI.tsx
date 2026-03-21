@@ -170,7 +170,7 @@ export default function WhoAmI() {
                   View My Work
                 </motion.a>
                 <motion.a
-                  href="#contact"
+                  href="/contact"
                   className="px-5 sm:px-6 py-2.5 sm:py-3 border-2 border-green-500 text-green-400 font-medium rounded-lg hover:bg-green-500/10 transition-all duration-300 shadow-lg shadow-green-500/10 text-center"
                   whileHover={{
                     y: -2,
