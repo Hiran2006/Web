@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import TopNav from "./components/TopNav";
+import Footer from "./components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -50,6 +51,7 @@ export default function RootLayout({
         >
           <TopNav />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

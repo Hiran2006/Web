@@ -14,7 +14,6 @@ const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-// Move variants inside component to avoid SSR issues
 const getVariants = () => ({
   container: {
     hidden: { opacity: 0, y: -20 },
@@ -22,8 +21,8 @@ const getVariants = () => ({
       opacity: 1,
       y: 0,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
       },
     },
   },
@@ -32,19 +31,19 @@ const getVariants = () => ({
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring" as const, stiffness: 100 },
+      transition: { type: "spring" as const, stiffness: 120, damping: 15 },
     },
   },
   menu: {
     open: {
       opacity: 1,
-      x: 0,
-      transition: { type: "spring" as const, stiffness: 300, damping: 30 },
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 200, damping: 25 },
     },
     closed: {
       opacity: 0,
-      x: "100%",
-      transition: { duration: 0.3 },
+      y: -20,
+      transition: { duration: 0.2 },
     },
   },
 });
@@ -53,12 +52,26 @@ export default function TopNav() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  // Active path can be derived directly from pathname instead of using effect
+  
   const isActivePath =
     navItems.find((item) => {
       if (item.href === "/") return pathname === item.href;
       return pathname.startsWith(item.href);
     })?.href || null;
+
+  // Add scroll handler to detect scrolled state
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close mobile menu when path changes
   useEffect(() => {
@@ -77,73 +90,70 @@ export default function TopNav() {
     };
   }, [isMenuOpen]);
 
-  const NavLink = ({ item }: { item: (typeof navItems)[0] }) => (
-    <motion.a
-      href={item.href}
-      className={`relative px-3 py-2 md:px-4 md:py-2 font-medium group overflow-hidden block
-        ${isActivePath === item.href
-          ? "text-green-600 dark:text-green-400"
-          : "text-gray-600 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-300"
-        } transition-colors`}
-      aria-current={isActivePath === item.href ? "page" : undefined}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <span className="relative z-10">{item.label}</span>
-      <motion.span
-        className={`absolute inset-0 bg-green-500/10 rounded-lg`}
-        initial={{ scale: 0 }}
-        animate={{
-          scale: isActivePath === item.href || isMenuOpen ? 1 : 0,
-          opacity: isMenuOpen ? 0.5 : 1,
-        }}
-        whileHover={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-      />
-      <motion.span
-        className="absolute bottom-0 left-0 w-full h-0.5 bg-green-400 origin-left"
-        initial={{ scaleX: 0 }}
-        animate={{
-          scaleX: isActivePath === item.href ? 1 : 0,
-          opacity: isMenuOpen ? 0 : 1,
-        }}
-        whileHover={{
-          scaleX: isMenuOpen ? 0 : 1,
-          opacity: 1,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      />
-    </motion.a>
-  );
+  const NavLink = ({ item }: { item: (typeof navItems)[0] }) => {
+    const active = isActivePath === item.href;
+    return (
+      <Link
+        href={item.href}
+        className={`relative px-4 py-2 text-sm font-semibold tracking-wide rounded-xl transition-all duration-300 block
+          ${active
+            ? "text-emerald-500 dark:text-cyan-400 font-bold"
+            : "text-gray-600 hover:text-emerald-500 dark:text-gray-400 dark:hover:text-cyan-400"
+          }`}
+        aria-current={active ? "page" : undefined}
+      >
+        <span className="relative z-10">{item.label}</span>
+        {active && (
+          <motion.span
+            layoutId="activeNavBackground"
+            className="absolute inset-0 bg-emerald-500/10 dark:bg-cyan-500/10 rounded-xl"
+            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+          />
+        )}
+      </Link>
+    );
+  };
 
-  // Get variants inside component to avoid SSR issues
   const variants = getVariants();
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 ${isScrolled ? "bg-white/90 dark:bg-black/90 backdrop-blur-sm shadow-lg dark:shadow-green-900/10" : "bg-transparent"
-        }`}
+      className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? "top-4 px-4 sm:px-6 lg:px-8" 
+          : "top-0 px-0"
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: "spring" as const, stiffness: 300, damping: 25 }}
+      transition={{ type: "spring", stiffness: 120, damping: 20 }}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+      <div 
+        className={`mx-auto transition-all duration-500 ${
+          isScrolled 
+            ? "max-w-6xl glass-panel rounded-2xl border border-gray-200/50 dark:border-gray-800/80 shadow-2xl px-6 md:px-8 py-2.5" 
+            : "max-w-full bg-transparent px-4 sm:px-8 py-4 border-b border-transparent"
+        }`}
+      >
+        <div className="flex justify-between items-center h-12">
           {/* Logo */}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div 
+            whileHover={{ scale: 1.05 }} 
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center"
+          >
             <Link
               href="/"
-              className="text-green-600 dark:text-green-400 text-2xl font-bold hover:text-green-500 dark:hover:text-green-300 transition-colors"
+              className="text-2xl font-black bg-gradient-to-r from-emerald-500 to-cyan-500 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent tracking-wider"
               aria-label="Home"
             >
-              Hiran
+              HIRAN.
             </Link>
           </motion.div>
 
           {/* Desktop Navigation & Theme Switcher */}
           <div className="hidden md:flex items-center space-x-6">
             <motion.nav
-              className="flex space-x-2"
+              className="flex space-x-1"
               initial="hidden"
               animate="visible"
               variants={variants.container}
@@ -154,14 +164,17 @@ export default function TopNav() {
                 </motion.div>
               ))}
             </motion.nav>
+            
+            <div className="h-6 w-[1px] bg-gray-200 dark:bg-gray-800" />
+            
             <ThemeSwitcher />
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="md:hidden flex items-center space-x-3">
             <ThemeSwitcher />
             <motion.button
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 focus:outline-none"
+              className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-900 border border-gray-200/50 dark:border-gray-800/80 text-gray-600 dark:text-gray-400 hover:text-emerald-500 dark:hover:text-cyan-400 focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileTap={{ scale: 0.9 }}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -173,8 +186,9 @@ export default function TopNav() {
                     initial={{ rotate: 90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <FiX className="h-6 w-6" />
+                    <FiX className="h-5 w-5" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -182,8 +196,9 @@ export default function TopNav() {
                     initial={{ rotate: -90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
                     exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <FiMenu className="h-6 w-6" />
+                    <FiMenu className="h-5 w-5" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -196,14 +211,14 @@ export default function TopNav() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-lg md:hidden pt-16 z-40 overflow-y-auto"
+            className="fixed inset-x-4 top-24 max-w-lg mx-auto bg-white/95 dark:bg-[#030303]/95 backdrop-blur-xl border border-gray-200/60 dark:border-gray-800/80 rounded-2xl shadow-2xl p-6 z-40 overflow-y-auto md:hidden"
             initial="closed"
             animate="open"
             exit="closed"
             variants={variants.menu}
           >
             <motion.div
-              className="container mx-auto px-4 py-8 flex flex-col space-y-4"
+              className="flex flex-col space-y-3"
               variants={variants.container}
               initial="hidden"
               animate="visible"
@@ -213,9 +228,17 @@ export default function TopNav() {
                   key={item.href}
                   variants={variants.item}
                   custom={index}
-                  className="border-b border-gray-200 dark:border-gray-800 last:border-0"
                 >
-                  <NavLink item={item} />
+                  <Link
+                    href={item.href}
+                    className={`px-4 py-3 text-base font-semibold rounded-xl block transition-all duration-300
+                      ${isActivePath === item.href
+                        ? "bg-emerald-500/10 dark:bg-cyan-500/10 text-emerald-600 dark:text-cyan-400 font-bold"
+                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
+                      }`}
+                  >
+                    {item.label}
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>
