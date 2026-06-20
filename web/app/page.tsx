@@ -2,7 +2,7 @@ import { WhoAmI, SkillsServices, ProjectCon, JourneyTimeline, CTASection } from 
 
 export default function Home() {
   return (
-    <main className="relative bg-white dark:bg-[#030303] min-h-screen">
+    <main className="relative bg-white dark:bg-[#030303] min-h-screen overflow-hidden">
       {/* 1. Hero Section */}
       <WhoAmI />
 
@@ -13,7 +13,7 @@ export default function Home() {
       <ProjectCon />
 
       {/* 4. Journey Timeline Section */}
-      <section className="relative py-24 bg-white dark:bg-[#030303] border-t border-gray-200/50 dark:border-gray-900/50 transition-colors duration-300">
+      <section className="relative py-24 bg-white dark:bg-[#030303] border-t border-gray-200/50 dark:border-gray-900/50 transition-colors duration-300 overflow-hidden">
         {/* Background mesh grid details */}
         <div className="absolute inset-0 bg-grid opacity-100 pointer-events-none" />
         <div className="absolute top-[30%] right-[-10%] w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
